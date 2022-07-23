@@ -9,7 +9,7 @@
 
 
 <div class="flex justify-center">
-    <div class="lg:w-[40vw]">
+    <div class="w-[100vw] xl:w-[40vw]">
         <div class="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
             <p class="text-center font-semibold text-xl mx-4 mb-0 dark:text-white">
             Play Chess
@@ -18,7 +18,7 @@
 
         <div class="flex justify-center">
             <div on:mouseenter={() => {really_bad_chess_btn=true}} on:mouseleave={() => {really_bad_chess_btn=false}} class="w-[100%] m-3">
-                <Button class="w-[100%] h-60 text-4xl overflow-hidden">
+                <Button class="w-[100%] h-60 lg:text-[35px] sm:text-[25px] overflow-hidden">
                     {#if really_bad_chess_btn}
                         <img src="/really_bad_chess_new.png" alt="" class="h-52" transition:fly="{{ y: 150, duration: 300 }}" />
                     {:else}
@@ -28,7 +28,7 @@
             </div>
 
             <div on:mouseenter={() => {magic_chess_btn=true}} on:mouseleave={() => {magic_chess_btn=false}} class="w-[100%] m-3">
-                <Button class="w-[100%] h-60 text-4xl overflow-hidden">
+                <Button class="w-[100%] h-60 lg:text-[35px] sm:text-[25px] overflow-hidden">
                     {#if magic_chess_btn}
                         <img src="/magic_chess.png" alt="" class="h-52" transition:fly="{{ y: 150, duration: 300 }}" />
                     {:else}
