@@ -37,17 +37,32 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
+    'rest_framework',
+    'authentication.apps.AuthenticationConfig',
+    'chess.apps.ChessConfig',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CHANNEL_LAYERS = {
+    "default": {
+        # Set this to channels.layers.InMemoryChannelLayer if you don't want to use redis and remove the CONFIG key
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {  # Remove this if you aren't using redis
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -69,6 +84,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
+ASGI_APPLICATION = 'backend.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -123,3 +139,21 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Other settings
+
+AUTH_USER_MODEL = 'authentication.CustomUser'
+
+# CORS
+CORS_ALLOWED_ORIGINS = [
+    # ''
+]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
