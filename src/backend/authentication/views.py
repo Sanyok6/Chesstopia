@@ -49,6 +49,7 @@ class LogoutView(views.APIView):
 
 
 class UserViewSet(viewsets.ViewSet):
+    permission_classes = (permissions.IsAuthenticated,)
 
     @action(methods=("GET",), detail=False, url_path="me")
     def get_current_user_data(self, request):
