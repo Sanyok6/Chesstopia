@@ -1,8 +1,30 @@
-from django.contrib.auth import get_user_model, login
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
+from . import models
 
 User = get_user_model()
+
+
+class ReallyBadChessStatsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.ReallyBadChessStats
+        fields = ('wins', 'losses', 'draws')
+
+
+class MagicChessStatsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.MagicChessStats
+        fields = ('wins', 'losses', 'draws')
+
+
+class UserStatsSerializer(serializers.ModelSerializer):
+    really_bad_chess = ReallyBadChessStatsSerializer()
+    magic_chess = MagicChessStatsSerializer()
+
+    class Meta:
+        model = models.UserStats
+        fields = ('really_bad_chess', 'magic_chess')
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
@@ -18,11 +40,11 @@ class UserCreateSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     password = None
     email = None
-    # profile_picture = serializers.ImageField(use_url=True)
+    userstats = UserStatsSerializer()
 
     class Meta:
         model = User
-        fields = ('username', 'is_staff')
+        fields = ('username', 'is_staff', 'userstats')
 
 
 class LoginSerializer(serializers.Serializer):
