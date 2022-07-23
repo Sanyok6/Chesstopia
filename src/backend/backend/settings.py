@@ -146,7 +146,7 @@ AUTH_USER_MODEL = 'authentication.CustomUser'
 
 # CORS
 CORS_ALLOWED_ORIGINS = [
-    # ''
+    'http://localhost:5173',
 ]
 
 REST_FRAMEWORK = {
