@@ -1,4 +1,4 @@
-lockfileVersion: 5.3
+lockfileVersion: 5.4
 
 specifiers:
   '@playwright/test': ^1.22.2
@@ -20,6 +20,7 @@ specifiers:
   svelte-check: ^2.7.1
   svelte-heros: ^2.3.2
   svelte-preprocess: ^4.10.7
+  svelte-use-chessground: ^2.0.0
   tailwindcss: ^3.1.5
   tslib: ^2.3.1
   typescript: ^4.7.4
@@ -27,6 +28,7 @@ specifiers:
 
 dependencies:
   svelte-heros: 2.3.2
+  svelte-use-chessground: 2.0.0
 
 devDependencies:
   '@playwright/test': 1.23.4
@@ -603,6 +605,10 @@ packages:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
     dev: true
+
+  /chessground/8.3.3:
+    resolution: {integrity: sha512-QUuVKcGDI8ve4zPwFyfU3bIWTaoEP6a+GehLGOa7zU3y4L0BLOsiEXzp2QWjt75e3JKa6m3qdWb9ahyDro7lcA==}
+    dev: false
 
   /chokidar/3.5.3:
     resolution: {integrity: sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw==}
@@ -2087,6 +2093,12 @@ packages:
       svelte: 3.49.0
       typescript: 4.7.4
     dev: true
+
+  /svelte-use-chessground/2.0.0:
+    resolution: {integrity: sha512-EYy2A8meQ3nfwPakf8S4S4X2Waohe4eyqqbpV7fF6RTS+v1QdbYEy+PaU5WZ/CgINLN9xn0qBxG8L+MoJu2RBA==}
+    dependencies:
+      chessground: 8.3.3
+    dev: false
 
   /svelte/3.49.0:
     resolution: {integrity: sha512-+lmjic1pApJWDfPCpUUTc1m8azDqYCG1JN9YEngrx/hUyIcFJo6VZhj0A1Ai0wqoHcEIuQy+e9tk+4uDgdtsFA==}

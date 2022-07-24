@@ -8,8 +8,14 @@ const config = {
 		  '/api/': {
 			target: 'http://127.0.0.1:8000/'
 		  }
-		}
-	}
+		},
+	},
+	ssr: {
+		noExternal: [
+			'svelte-use-chessground',
+			'chessground'
+		]
+	},
 };
 
 export default config;
