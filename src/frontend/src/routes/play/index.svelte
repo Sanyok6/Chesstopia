@@ -13,5 +13,5 @@
 
 <div
 	use:Chessground="{{config, initializer}}"
-	use:cgStylesHelper="{{ piecesFolderUrl: '/images/pieces/merida', boardUrl: '/images/board/blue.svg' }}"
+	use:cgStylesHelper="{{ piecesFolderUrl: '/pieces/', boardUrl: '/chess_board_blue.svg' }}"
 />
