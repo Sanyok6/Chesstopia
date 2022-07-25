@@ -17,7 +17,7 @@ class CustomUser(AbstractUser):
         },
     )
     email = models.EmailField(_("email address"), blank=True, null=True)
-    is_online = models.BooleanField(default=False)
+    is_playing = models.BooleanField(default=False)
 
 
 class VariantStats(models.Model):
