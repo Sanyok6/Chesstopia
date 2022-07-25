@@ -18,6 +18,7 @@
 	</div>
 	
 	<NavUl {hidden}>
+		<NavLi href="dashboard">Play</NavLi>
 		<NavLi href="#">About</NavLi>
 		<NavLi href="#">Settings</NavLi>
 		<NavLi href="#">Logout</NavLi>
