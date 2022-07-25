@@ -4,9 +4,11 @@ specifiers:
   '@playwright/test': ^1.22.2
   '@sveltejs/adapter-auto': next
   '@sveltejs/kit': next
+  '@types/chess.js': ^0.13.2
   '@typescript-eslint/eslint-plugin': ^5.27.0
   '@typescript-eslint/parser': ^5.27.0
   autoprefixer: ^10.4.7
+  chess: ^1.0.2
   eslint: ^8.16.0
   eslint-config-prettier: ^8.3.0
   eslint-plugin-svelte3: ^4.0.0
@@ -27,13 +29,15 @@ specifiers:
   vite: ^3.0.0
 
 dependencies:
+  '@types/chess.js': 0.13.2
+  chess: 1.0.2
   svelte-heros: 2.3.2
   svelte-use-chessground: 2.0.0
 
 devDependencies:
   '@playwright/test': 1.23.4
   '@sveltejs/adapter-auto': 1.0.0-next.63
-  '@sveltejs/kit': 1.0.0-next.392_svelte@3.49.0+vite@3.0.2
+  '@sveltejs/kit': 1.0.0-next.394_svelte@3.49.0+vite@3.0.2
   '@typescript-eslint/eslint-plugin': 5.30.7_6wltbjakwuqm7awqswigmiuhd4
   '@typescript-eslint/parser': 5.30.7_he2ccbldppg44uulnyq4rwocfa
   autoprefixer: 10.4.7_postcss@8.4.14
@@ -220,8 +224,8 @@ packages:
       - supports-color
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.392_svelte@3.49.0+vite@3.0.2:
-    resolution: {integrity: sha512-od4rDJ/Soq0I7mda7sTbAnNKERHSDEGNa7QBpLA859xgBkwC1JnEIymYOh9dm+hMyHhB0bUoRoaur0qxKLqOOw==}
+  /@sveltejs/kit/1.0.0-next.394_svelte@3.49.0+vite@3.0.2:
+    resolution: {integrity: sha512-YfRNSKdbvihHFvmQodaMlChcyf9dfU36FwK8WYQF5jqEmiRajLBb/ooU6RqPA0Z6j5okJHDSYBwxW8TP+nc+gg==}
     engines: {node: '>=16.9'}
     hasBin: true
     peerDependencies:
@@ -260,6 +264,10 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@types/chess.js/0.13.2:
+    resolution: {integrity: sha512-JEskkK0+rirQmbax2ap/kwwEbBaoKOqZHMemTjOVOCa5H1TvOjTHiJoR+H4aMhi5+dS3X3M+GJKZEuG3IcVZ7w==}
+    dev: false
 
   /@types/json-schema/7.0.11:
     resolution: {integrity: sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==}
@@ -605,6 +613,10 @@ packages:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
     dev: true
+
+  /chess/1.0.2:
+    resolution: {integrity: sha512-fw+6LjC2eOLD96Z17YUuayj3oHltyOrpCGhJ7KhPOciIeWLYHG82K0bnAef8qbqlvOS2wvm5tJai2ZGDnx3GUQ==}
+    dev: false
 
   /chessground/8.3.3:
     resolution: {integrity: sha512-QUuVKcGDI8ve4zPwFyfU3bIWTaoEP6a+GehLGOa7zU3y4L0BLOsiEXzp2QWjt75e3JKa6m3qdWb9ahyDro7lcA==}

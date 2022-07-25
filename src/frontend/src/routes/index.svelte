@@ -7,7 +7,7 @@
     userStore.subscribe((data) => userData = data);
     console.info("userStore", userData);
 
-    let really_bad_chess_btn = false
+    let confusion_chess_btn = false
     let magic_chess_btn = false //<img src="/magic_chess.png" alt="" />
 
 </script>
@@ -22,12 +22,12 @@
         </div>
 
         <div class="flex justify-center">
-            <div on:mouseenter={() => {really_bad_chess_btn=true}} on:mouseleave={() => {really_bad_chess_btn=false}} class="w-[100%] m-3">
+            <div on:mouseenter={() => {confusion_chess_btn=true}} on:mouseleave={() => {confusion_chess_btn=false}} class="w-[100%] m-3">
                 <Button class="w-[100%] h-60 lg:text-[35px] sm:text-[25px] overflow-hidden">
-                    {#if really_bad_chess_btn}
-                        <img src="/really_bad_chess_new.png" alt="" class="h-52" transition:fly="{{ y: 150, duration: 300 }}" />
+                    {#if confusion_chess_btn}
+                        <img src="/confusion_chess.png" alt="" class="h-52" transition:fly="{{ y: 150, duration: 300 }}" />
                     {:else}
-                        <div class="absolute" transition:fly="{{ y: -120, duration: 300 }}">Really Bad Chess</div>
+                        <div class="absolute" transition:fly="{{ y: -120, duration: 300 }}">Confusion Chess</div>
                     {/if}
                 </Button>
             </div>
