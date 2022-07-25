@@ -6,7 +6,7 @@
 
 <!-- <DarkMode /> -->
 
-<Navbar let:hidden let:toggle>
+<Navbar let:hidden let:toggle class="mb-5">
 	<NavBrand href="/">
 		<span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
 			Chesstopia
