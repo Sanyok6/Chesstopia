@@ -1,9 +1,35 @@
 <script>
 	import { Button } from 'flowbite-svelte';
-
 </script>
 
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<main>
+	<div>
+		<h1>Welcome to Chesstopia!</h1>
+		<br />
+		<Button>
+			<p class="btn">
+				<a href="/dashboard/">Enter</a>
+			</p>
+		</Button>
+	</div>
+</main>
 
-<Button>Welcome to the welcome page!</Button>
+<style>
+	main {
+		text-align: center;
+		padding: 1em;
+		max-width: 240px;
+		margin: 0 auto;
+	}
+
+	h1 {
+		font-size: 4em;
+		font-weight: 40;
+	}
+
+	@media (min-width: 640px) {
+		main {
+			max-width: none;
+		}
+	}
+</style>

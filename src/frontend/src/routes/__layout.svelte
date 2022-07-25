@@ -18,7 +18,8 @@
 	</div>
 
 	<NavUl {hidden}>
-		<NavLi href="about#">About</NavLi>
+		<NavLi href="dashboard">Play</NavLi>
+		<NavLi href="#">About</NavLi>
 		<NavLi href="#">Settings</NavLi>
 		<NavLi href="#">Logout</NavLi>
 	</NavUl>
