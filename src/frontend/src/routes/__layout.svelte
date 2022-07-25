@@ -16,7 +16,7 @@
 		<DarkMode />
 		<NavHamburger on:click={toggle} />
 	</div>
-	
+
 	<NavUl {hidden}>
 		<NavLi href="/">Play</NavLi>
 		<NavLi href="#">About</NavLi>
@@ -28,4 +28,3 @@
 <body class="bg-white dark:bg-gray-800 h-[100vh] dark:text-white">
 	<slot />
 </body>
-
