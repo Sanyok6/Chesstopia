@@ -7,7 +7,7 @@
 	import 'svelte-use-chessground/cgstyles/chessground.css';
 
 	let cgApi;
-	let config = {height: '400px'};
+	let config = {};
 
 	function initializer(api: any) {
 		cgApi = api;
