@@ -30,16 +30,15 @@ class UserStatsSerializer(serializers.ModelSerializer):
 class UserCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('username', 'email', 'password')
+        fields = ('username', 'password')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, user_data):
-        return User.objects.create_user(user_data['username'], user_data['email'], user_data['password'])
+        return User.objects.create_user(user_data['username'], password=user_data['password'])
 
 
 class UserSerializer(serializers.ModelSerializer):
     password = None
-    email = None
     userstats = UserStatsSerializer()
 
     class Meta:
@@ -48,5 +47,5 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class LoginSerializer(serializers.Serializer):
-    email = serializers.EmailField()
+    username = serializers.CharField()
     password = serializers.CharField()
