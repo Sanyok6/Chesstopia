@@ -6,9 +6,9 @@ from . import models
 User = get_user_model()
 
 
-class ReallyBadChessStatsSerializer(serializers.ModelSerializer):
+class ConfusionChessStatsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.ReallyBadChessStats
+        model = models.ConfusionChessStats
         fields = ('wins', 'losses', 'draws')
 
 
@@ -19,12 +19,12 @@ class MagicChessStatsSerializer(serializers.ModelSerializer):
 
 
 class UserStatsSerializer(serializers.ModelSerializer):
-    really_bad_chess = ReallyBadChessStatsSerializer()
+    confusion_chess = ConfusionChessStatsSerializer()
     magic_chess = MagicChessStatsSerializer()
 
     class Meta:
         model = models.UserStats
-        fields = ('really_bad_chess', 'magic_chess')
+        fields = ('confusion_chess', 'magic_chess')
 
 
 class UserCreateSerializer(serializers.ModelSerializer):

@@ -9,7 +9,7 @@ def generate_id():
 
 class ChessMatch(models.Model):
     CHESS_MATCH_TYPES = [
-        ("really_bad_chess", "Really bad chess"),
+        ("confusion_chess", "Confusion chess"),
         ("magic_chess", "Magic chess")
     ]
     id = models.SlugField(allow_unicode=True, primary_key=True, default=generate_id)

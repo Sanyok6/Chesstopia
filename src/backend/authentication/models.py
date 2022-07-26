@@ -29,7 +29,7 @@ class VariantStats(models.Model):
         abstract = True
 
 
-class ReallyBadChessStats(VariantStats):
+class ConfusionChessStats(VariantStats):
     pass
 
 
@@ -39,5 +39,5 @@ class MagicChessStats(VariantStats):
 
 class UserStats(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    really_bad_chess = models.ForeignKey(ReallyBadChessStats, on_delete=models.SET_NULL, null=True)
+    confusion_chess = models.ForeignKey(ConfusionChessStats, on_delete=models.SET_NULL, null=True)
     magic_chess = models.ForeignKey(MagicChessStats, on_delete=models.SET_NULL, null=True)
