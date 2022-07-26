@@ -1,3 +1,3 @@
 def main():
-    """doc"""
+    """Doc"""
     print()
