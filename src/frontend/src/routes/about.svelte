@@ -27,13 +27,4 @@
 		line-height: 1.7;
 		text-align: center;
 	}
-	.description figure {
-		font-size: smaller;
-		height: 400px;
-		width: 300px;
-		object-fit: cover;
-		float: left;
-		padding: 1rem;
-	}
-
 </style>
