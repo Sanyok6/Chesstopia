@@ -1,13 +1,15 @@
 <script lang="ts">
+    import { Alert } from "flowbite-svelte";
     import { goto } from "$app/navigation";
     import { fetchApi,formatApiErrors } from "../lib/api";
     import { userStore } from "$lib/store";
+
+    let messages: string[] = [];
 
     let username: string;
     let password: string;
 
     const handleLogin = async () => {
-        alert("LOGIN")
         const response = await fetchApi("auth/signup/", {
             method: "POST",
             body: JSON.stringify({
@@ -16,27 +18,17 @@
             })
         });
 
-        console.log(response)
-        alert(response)
+        // const response2 = await fetchApi("auth/users/me", {
+        //     method: "GET",});
 
-        const response2 = await fetchApi("auth/users/me", {
-            method: "GET",});
-
-        console.log(response2)
-        console.log(response.ok)
-        alert(response2)
-
-        const data = await response.json();
-
-        console.log(data.ok)
 
         if (response.ok) {
-            console.info("login success");
-            userStore.set(data.user);
+            console.info("login successful");
             goto("/");
         } else {
-            const errors = formatApiErrors(data); // this will be a list of strings
+            const errors = formatApiErrors(await response.json()); // this will be a list of strings
             console.error(errors)
+            messages = errors;
             // TODO: Show API errors
         }
     }
@@ -46,8 +38,11 @@
     <div class="max-w-md w-full space-y-8">
       <div>
         <img class="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="Workflow">
-        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Login in to your account</h2>
+        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Create an account</h2>
       </div>
+      {#if messages.length}
+        <Alert color="yellow">{messages.toString()}</Alert>
+      {/if}
       <form class="mt-8 space-y-6" on:submit|preventDefault={handleLogin}>
         <div class="rounded-md shadow-sm -space-y-px">
           <div>
@@ -56,7 +51,7 @@
           </div>
           <div>
             <label for="password" class="sr-only">Password</label>
-            <input id="password" name="password" bind:value={password} type="password" autocomplete="current-password" required class="input-field rounded-b-md" placeholder="Password">
+            <input id="password" name="password" minlength="6" bind:value={password} type="password" autocomplete="current-password" required class="input-field rounded-b-md" placeholder="Password">
           </div>
         </div>
     

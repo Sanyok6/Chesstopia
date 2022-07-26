@@ -19,7 +19,7 @@
 
 	<NavUl {hidden}>
 		<NavLi href="/">Play</NavLi>
-		<NavLi href="#">About</NavLi>
+		<NavLi href="/about">About</NavLi>
 		<NavLi href="#">Settings</NavLi>
 		<NavLi href="#">Logout</NavLi>
 	</NavUl>

@@ -1,7 +1,10 @@
 <script lang="ts">
+    import { Alert } from "flowbite-svelte";
     import { goto } from "$app/navigation";
     import { fetchApi,formatApiErrors,getCookie } from "../lib/api";
     import { userStore } from "$lib/store";
+
+    let messages: string[] = [];
 
     let username: string;
     let password: string;
@@ -15,15 +18,13 @@
             })
         });
 
-        const data = await response.json();
-
         if (response.ok) {
-            userStore.set(data.user);
-            console.info("login success");
+            console.info("login successful");
             goto("/");
         } else {
-            const errors = formatApiErrors(data); // this will be a list of strings
+            const errors = formatApiErrors(await response.json()); // this will be a list of strings
             console.error(errors)
+            messages=errors;
             // TODO: Show API errors
         }
     }
@@ -36,6 +37,9 @@
         <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Login in to your account</h2>
       </div>
       <form class="mt-8 space-y-6" on:submit|preventDefault={handleLogin}>
+        {#if messages.length}
+          <Alert color="yellow">{messages.toString()}</Alert>
+        {/if}
         <div class="rounded-md shadow-sm -space-y-px">
           <div>
             <label for="username" class="sr-only">Email address</label>
