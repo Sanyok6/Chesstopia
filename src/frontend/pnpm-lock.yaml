@@ -7,6 +7,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^5.27.0
   '@typescript-eslint/parser': ^5.27.0
   autoprefixer: ^10.4.7
+  chess.ts: ^0.16.2
   eslint: ^8.16.0
   eslint-config-prettier: ^8.3.0
   eslint-plugin-svelte3: ^4.0.0
@@ -27,6 +28,7 @@ specifiers:
   vite: ^3.0.0
 
 dependencies:
+  chess.ts: 0.16.2
   svelte-heros: 2.3.2
   svelte-use-chessground: 2.0.0
 
@@ -605,6 +607,10 @@ packages:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
     dev: true
+
+  /chess.ts/0.16.2:
+    resolution: {integrity: sha512-eqTrUGxN7xLr/SHQcc7AT+Kp1aRQb1iCMn1pBXsmpU06soRH0u+HJmM/vcxKadqqvoDEazu9uFvVoZSKP2pDSg==}
+    dev: false
 
   /chessground/8.3.3:
     resolution: {integrity: sha512-QUuVKcGDI8ve4zPwFyfU3bIWTaoEP6a+GehLGOa7zU3y4L0BLOsiEXzp2QWjt75e3JKa6m3qdWb9ahyDro7lcA==}

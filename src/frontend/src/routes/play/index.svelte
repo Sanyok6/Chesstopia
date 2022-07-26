@@ -31,11 +31,13 @@
         ])
 
 	let cgApi;
+
 	let config = {
 		movable:{
 			free:false,
 			color:move_color,
 			dests:legal,
+			events: {after: play}
 		},
 		premovable:{
 			enabled:false,
@@ -43,10 +45,33 @@
 		fen:fen,
 	};
 
+	const updateConfig = () => {
+		config.movable.color = move_color
+		config.movable.dests = legal
+		config.fen = fen
+	}
+
+
 	function initializer(api: any) {
 		cgApi = api;
 		// A named function might not be necessary but I've encountered infinite loops while using an inline initializer function.
 	}
+
+	import { Chess } from 'chess.ts'
+	const chess = new Chess()
+
+	function play() {
+		if (!chess.gameOver()) {
+			const moves = chess.moves()
+			const move = moves[Math.floor(Math.random() * moves.length)]
+			chess.move(move)
+			fen=chess.fen()
+			updateConfig()
+			setTimeout(play, 10)
+		}
+	}
+
+	//play()
 
 </script>
 
