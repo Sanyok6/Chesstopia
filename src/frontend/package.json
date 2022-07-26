@@ -39,6 +39,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"chess.ts": "^0.16.2",
 		"svelte-heros": "^2.3.2",
 		"svelte-use-chessground": "^2.0.0"
 	}
