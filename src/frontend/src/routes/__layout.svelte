@@ -7,7 +7,7 @@
 <!-- <DarkMode /> -->
 
 <Navbar let:hidden let:toggle class="mb-5">
-	<NavBrand href="/">
+	<NavBrand href="/welcome">
 		<span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
 			Chesstopia
 		</span>
@@ -16,10 +16,10 @@
 		<DarkMode />
 		<NavHamburger on:click={toggle} />
 	</div>
-	
+
 	<NavUl {hidden}>
-		<NavLi href="dashboard">Play</NavLi>
-		<NavLi href="#">About</NavLi>
+		<NavLi href="/">Play</NavLi>
+		<NavLi href="/about">About</NavLi>
 		<NavLi href="#">Settings</NavLi>
 		<NavLi href="#">Logout</NavLi>
 	</NavUl>
@@ -28,4 +28,3 @@
 <body class="bg-white dark:bg-gray-800 h-[100vh] dark:text-white">
 	<slot />
 </body>
-

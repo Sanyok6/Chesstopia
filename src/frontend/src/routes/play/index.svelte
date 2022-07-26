@@ -6,8 +6,42 @@
 	import { Chessground, cgStylesHelper } from 'svelte-use-chessground';
 	import 'svelte-use-chessground/cgstyles/chessground.css';
 
+	const pieces = ["r", "n", "b", "q"]
+	let  layout = ["k"]
+	for (let p=0; p<7; p++) {
+		layout.push(pieces[Math.floor(Math.random() * pieces.length)])
+	}
+
+	const randomLayout = () => {
+		let randomized = layout
+		.map(value => ({ value, sort: Math.random() }))
+		.sort((a, b) => a.sort - b.sort)
+		.map(({ value }) => value)
+
+		return randomized.join("")
+	}
+
+	const whiteLineup = randomLayout().toLocaleLowerCase()
+	const blackLineup = randomLayout().toUpperCase()
+
+	let fen = whiteLineup+"/pppppppp/8/8/8/8/PPPPPPPP/"+blackLineup+" w KQkq - 0 1"
+	let move_color="white"
+	let legal= new Map([
+          ['h2', ['h4']]
+        ])
+
 	let cgApi;
-	let config = {};
+	let config = {
+		movable:{
+			free:false,
+			color:move_color,
+			dests:legal,
+		},
+		premovable:{
+			enabled:false,
+		},
+		fen:fen,
+	};
 
 	function initializer(api: any) {
 		cgApi = api;

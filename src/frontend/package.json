@@ -40,7 +40,6 @@
 	"type": "module",
 	"dependencies": {
 		"svelte-heros": "^2.3.2",
-		"svelte-navigator": "^3.1.6",
 		"svelte-use-chessground": "^2.0.0"
 	}
 }
