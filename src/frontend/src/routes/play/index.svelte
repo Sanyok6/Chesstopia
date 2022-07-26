@@ -26,16 +26,13 @@
 
 	let fen = whiteLineup+"/pppppppp/8/8/8/8/PPPPPPPP/"+blackLineup+" w KQkq - 0 1"
 	let move_color="white"
-	let legal= new Map([
-          ['h2', ['h4']]
-        ])
+	let legal= new Map([])
 
 	let cgApi;
 
 	let config = {
 		movable:{
 			free:false,
-			color:move_color,
 			dests:legal,
 			events: {after: play}
 		},
@@ -46,7 +43,6 @@
 	};
 
 	const updateConfig = () => {
-		config.movable.color = move_color
 		config.movable.dests = legal
 		config.fen = fen
 	}
@@ -60,16 +56,44 @@
 	import { Chess } from 'chess.ts'
 	const chess = new Chess()
 
-	function play() {
+	function play(from: string, to: string) {
+		chess.move({ from: from, to: to })
 		if (!chess.gameOver()) {
 			const moves = chess.moves()
 			const move = moves[Math.floor(Math.random() * moves.length)]
 			chess.move(move)
 			fen=chess.fen()
+
+			generateLegalMoves()
+			
 			updateConfig()
-			setTimeout(play, 10)
+			//setTimeout(play, 10)
 		}
 	}
+
+	function generateLegalMoves() {
+		const nowLegal = chess.moves({verbose:true})
+		let formated = []
+		formated.push([nowLegal[0].from, [nowLegal[0].to]])
+		for (let l in nowLegal) {
+			for (let i=0; i <= formated.length-1; i++) {
+				console.log(i)
+				if (nowLegal[l].from == formated[i][0]){
+					formated[i][1].push(nowLegal[l].to)
+					break
+				} else {
+					if (i == formated.length-1) {
+						formated.push([nowLegal[l].from, [nowLegal[l].to]])
+					}
+				}
+			}
+		}
+		legal = new Map(formated);
+		return legal
+	}
+
+	generateLegalMoves()
+	updateConfig()
 
 	//play()
 
