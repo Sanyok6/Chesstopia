@@ -2,34 +2,13 @@
 	import { Button } from 'flowbite-svelte';
 </script>
 
-<main>
-	<div>
-		<h1>Welcome to Chesstopia!</h1>
-		<br />
+<div class="flex h-1/2 justify-center items-center">
+	<div class="text-center">
+		<h1 class="font-semibold text-6xl dark:text-white my-36">Welcome to Chesstopia!</h1>
 		<a href="/">
-			<Button href="/dashboard" outline gradient color="purpleToBlue" shadow="blue">
+			<Button outline gradient color="purpleToBlue" shadow="blue">
 				Enter Chesstopia
 			</Button>
 		</a>
 	</div>
-</main>
-
-<style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
-
-	h1 {
-		font-size: 4em;
-		font-weight: 40;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
-</style>
+</div>
