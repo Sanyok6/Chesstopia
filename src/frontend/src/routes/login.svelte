@@ -1,8 +1,7 @@
 <script lang="ts">
     import { Alert } from "flowbite-svelte";
     import { goto } from "$app/navigation";
-    import { fetchApi,formatApiErrors,getCookie } from "../lib/api";
-    import { userStore } from "$lib/store";
+    import { fetchApi,fetchUserData,formatApiErrors } from "$lib/api";
 
     let messages: string[] = [];
 
@@ -19,11 +18,10 @@
         });
 
         if (response.ok) {
-            console.info("login successful");
+            fetchUserData(null);
             goto("/");
         } else {
             const errors = formatApiErrors(await response.json()); // this will be a list of strings
-            console.error(errors)
             messages=errors;
             // TODO: Show API errors
         }

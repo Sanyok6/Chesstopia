@@ -103,7 +103,7 @@
 	<div class="col-span-2 flex justify-center items-center">
 		<div
 			style="width:{board_size}%;aspect-ratio:1"
-			use:Chessground="{{config, initializer}}"
+			use:Chessground={{config, initializer}}
 			use:cgStylesHelper="{{ piecesFolderUrl: 'game/pieces/', boardUrl: 'game/board_blue.svg' }}"
 		/>
 	</div>	
@@ -111,7 +111,7 @@
 	<div class="">
 		<div class="m-3">
 			Adjust Board Size
-			<Range id="range1" min=25 max=95 bind:value={board_size}/>
+			<Range id="range1" min={25} max={95} bind:value={board_size}/>
 		</div>
 		<div class="m-3">
 			Board Theme

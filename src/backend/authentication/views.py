@@ -25,6 +25,7 @@ class LoginView(views.APIView):
 
         login(request, user)
         response = Response(status=status.HTTP_204_NO_CONTENT)
+        response.set_cookie('isLoggedIn', 'yes', max_age=settings.SESSION_COOKIE_AGE)
 
         return response
 
@@ -38,6 +39,7 @@ class SignupView(views.APIView):
         user = serializer.save()
         login(request, user)
         response = Response(status=status.HTTP_204_NO_CONTENT)
+        response.set_cookie('isLoggedIn', 'yes', max_age=settings.SESSION_COOKIE_AGE)
         return response
 
 
@@ -45,6 +47,7 @@ class LogoutView(views.APIView):
     def post(self, request):
         logout(request)
         response = Response(status=status.HTTP_204_NO_CONTENT)
+        response.delete_cookie('isLoggedIn')
         return response
 
 

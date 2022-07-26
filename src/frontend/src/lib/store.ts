@@ -1,7 +1,7 @@
 
 import { writable } from 'svelte/store';
 
-interface User {
+export interface User {
     id: number;
     username: string;
     is_staff: boolean;

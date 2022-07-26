@@ -1,6 +1,19 @@
-<script>
-	import { DarkMode, Navbar, NavBrand, NavHamburger, NavLi, NavUl } from "flowbite-svelte";
-	import '../app.css';
+<script lang="ts">
+import { DarkMode, Navbar, NavBrand, NavHamburger, NavLi, NavUl } from "flowbite-svelte";
+import { onMount } from "svelte";
+import { fetchUserData } from "$lib/api";
+import { userStore, type User } from "$lib/store";
+import '../app.css';
+
+
+let userData: User | null = null
+
+userStore.subscribe(d => userData = d)
+
+onMount(() => {
+    fetchUserData(userData);
+})
+
 </script>
 
 

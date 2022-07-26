@@ -1,15 +1,15 @@
-<script>
-	import { fly } from 'svelte/transition';
-    import { Button } from "flowbite-svelte";
-    import { userStore } from "$lib/store";
+<script lang="ts">
+import { fly } from 'svelte/transition';
+import { Button } from "flowbite-svelte";
+import { userStore, type User } from "$lib/store";
+import { onMount } from 'svelte';
+import { fetchUserData } from '$lib/api';
 
-    let userData;
-    userStore.subscribe((data) => userData = data);
-    console.info("userStore", userData);
+let userData: User | null = null;
+userStore.subscribe((data) => userData = data);
 
-    let confusion_chess_btn = false
-    let magic_chess_btn = false //<img src="/magic_chess.png" alt="" />
-
+let confusion_chess_btn = false
+let magic_chess_btn = false //<img src="/magic_chess.png" alt="" />
 </script>
 
 
@@ -17,7 +17,11 @@
     <div class="w-[100vw] xl:w-[40vw]">
         <div class="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
             <p class="text-center font-semibold text-xl mx-4 mb-0 dark:text-white">
-            Play Chess
+                {#if userData}
+                    Play Chess {userData.username}
+                {:else}
+                    Loading...
+                {/if}
             </p>
         </div>
 
