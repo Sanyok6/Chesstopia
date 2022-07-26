@@ -30,13 +30,13 @@
     }
 </script>
 
-<div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+<div class="min-h-[75%] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full space-y-8">
       <div>
-        <img class="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="Workflow">
-        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Login in to your account</h2>
+        <h1 class="text-6xl font-extralight text-center">Chesstopia</h1>
+        <h2 class="mt-8 text-center text-3xl font-semibold text-gray-700 dark:text-gray-400">Login in to your account</h2>
       </div>
-      <form class="mt-8 space-y-6" on:submit|preventDefault={handleLogin}>
+      <form class="mt-5 space-y-6" on:submit|preventDefault={handleLogin}>
         {#if messages.length}
           <Alert color="yellow">{messages.toString()}</Alert>
         {/if}
