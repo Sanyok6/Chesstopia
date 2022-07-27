@@ -24,7 +24,7 @@ export const fetchApi = async (
     defaultOptions.headers = { 'X-CSRFToken': csrfToken, ...defaultOptions.headers };
   }
   defaultOptions.credentials = 'include';
-  return await fetch('http://127.0.0.1:5173/api/' + endpoint, defaultOptions);
+  return await fetch(`${window.location.origin}/api/${endpoint}`, defaultOptions);
 };
 
 export const fetchUserData = (userData: User | null, csrfTk?: string) => {
