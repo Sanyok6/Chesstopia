@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { Range } from 'flowbite-svelte'
+	import { Range, Dropdown, DropdownItem } from 'flowbite-svelte'
 
 	let board_size = 50
+	let board_style = "blue"
 
 	import { Chessground, cgStylesHelper } from 'svelte-use-chessground';
 	import 'svelte-use-chessground/cgstyles/chessground.css';
@@ -26,16 +27,13 @@
 
 	let fen = whiteLineup+"/pppppppp/8/8/8/8/PPPPPPPP/"+blackLineup+" w KQkq - 0 1"
 	let move_color="white"
-	let legal= new Map([
-          ['h2', ['h4']]
-        ])
+	let legal= new Map([])
 
 	let cgApi;
 
 	let config = {
 		movable:{
 			free:false,
-			color:move_color,
 			dests:legal,
 			events: {after: play}
 		},
@@ -46,7 +44,6 @@
 	};
 
 	const updateConfig = () => {
-		config.movable.color = move_color
 		config.movable.dests = legal
 		config.fen = fen
 	}
@@ -60,18 +57,47 @@
 	import { Chess } from 'chess.ts'
 	const chess = new Chess()
 
-	function play() {
+	function play(from: string, to: string) {
+		chess.move({ from: from, to: to, promotion: "q" })
 		if (!chess.gameOver()) {
 			const moves = chess.moves()
 			const move = moves[Math.floor(Math.random() * moves.length)]
 			chess.move(move)
 			fen=chess.fen()
+
+			generateLegalMoves()
+			
 			updateConfig()
-			setTimeout(play, 10)
+			//setTimeout(play, 10)
 		}
 	}
 
+	function generateLegalMoves() {
+		const nowLegal = chess.moves({verbose:true})
+		let formated = []
+		formated.push([nowLegal[0].from, [nowLegal[0].to]])
+		for (let l in nowLegal) {
+			for (let i=0; i <= formated.length-1; i++) {
+				//console.log(i)
+				if (nowLegal[l].from == formated[i][0]){
+					formated[i][1].push(nowLegal[l].to)
+					break
+				} else {
+					if (i == formated.length-1) {
+						formated.push([nowLegal[l].from, [nowLegal[l].to]])
+					}
+				}
+			}
+		}
+		legal = new Map(formated);
+		return legal
+	}
+
+	generateLegalMoves()
+	updateConfig()
+
 	//play()
+
 
 </script>
 
@@ -80,7 +106,7 @@
 		<div
 			style="width:{board_size}%;aspect-ratio:1"
 			use:Chessground={{config, initializer}}
-			use:cgStylesHelper="{{ piecesFolderUrl: 'game/pieces/', boardUrl: 'game/board_blue.svg' }}"
+			use:cgStylesHelper="{{ piecesFolderUrl: 'game/pieces/', boardUrl: 'game/board_'+board_style+'.svg' }}"
 		/>
 	</div>	
 
@@ -91,11 +117,17 @@
 		</div>
 		<div class="m-3">
 			Board Theme
-			(TODO)
+			<Dropdown label="Board Theme" class="w-40">
+				<DropdownItem on:click={() => {board_style="blue"}}>Blue</DropdownItem>
+				<DropdownItem on:click={() => {board_style="green"}}>Green</DropdownItem>
+				<DropdownItem on:click={() => {board_style="brown"}}>Brown</DropdownItem>
+			</Dropdown>
 		</div>
 		<div class="m-3">
 			Piece Set
-			(TODO)
+			<Dropdown label="Piece Set" class="w-32">
+				<DropdownItem>Default</DropdownItem>
+			</Dropdown>
 		</div>
 	</div>
 </div>
