@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { Range } from 'flowbite-svelte'
+	import { Range, Dropdown, DropdownItem } from 'flowbite-svelte'
 
 	let board_size = 50
+	let board_style = "blue"
 
 	import { Chessground, cgStylesHelper } from 'svelte-use-chessground';
 	import 'svelte-use-chessground/cgstyles/chessground.css';
@@ -57,7 +58,7 @@
 	const chess = new Chess()
 
 	function play(from: string, to: string) {
-		chess.move({ from: from, to: to })
+		chess.move({ from: from, to: to, promotion: "q" })
 		if (!chess.gameOver()) {
 			const moves = chess.moves()
 			const move = moves[Math.floor(Math.random() * moves.length)]
@@ -77,7 +78,7 @@
 		formated.push([nowLegal[0].from, [nowLegal[0].to]])
 		for (let l in nowLegal) {
 			for (let i=0; i <= formated.length-1; i++) {
-				console.log(i)
+				//console.log(i)
 				if (nowLegal[l].from == formated[i][0]){
 					formated[i][1].push(nowLegal[l].to)
 					break
@@ -97,6 +98,7 @@
 
 	//play()
 
+
 </script>
 
 <div class="xl:grid grid-cols-3">
@@ -104,7 +106,7 @@
 		<div
 			style="width:{board_size}%;aspect-ratio:1"
 			use:Chessground={{config, initializer}}
-			use:cgStylesHelper="{{ piecesFolderUrl: 'game/pieces/', boardUrl: 'game/board_blue.svg' }}"
+			use:cgStylesHelper="{{ piecesFolderUrl: 'game/pieces/', boardUrl: 'game/board_'+board_style+'.svg' }}"
 		/>
 	</div>	
 
@@ -115,11 +117,17 @@
 		</div>
 		<div class="m-3">
 			Board Theme
-			(TODO)
+			<Dropdown label="Board Theme" class="w-40">
+				<DropdownItem on:click={() => {board_style="blue"}}>Blue</DropdownItem>
+				<DropdownItem on:click={() => {board_style="green"}}>Green</DropdownItem>
+				<DropdownItem on:click={() => {board_style="brown"}}>Brown</DropdownItem>
+			</Dropdown>
 		</div>
 		<div class="m-3">
 			Piece Set
-			(TODO)
+			<Dropdown label="Piece Set" class="w-32">
+				<DropdownItem>Default</DropdownItem>
+			</Dropdown>
 		</div>
 	</div>
 </div>
