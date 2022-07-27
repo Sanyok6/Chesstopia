@@ -4,7 +4,7 @@
     import { onMount } from "svelte";
 
     onMount(() => {
-        fetchApi("auth/logout/").then(() => {
+        fetchApi("auth/logout/", {method:"POST"}).then(() => {
             userStore.set(null);
         });
     })
