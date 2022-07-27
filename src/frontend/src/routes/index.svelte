@@ -1,15 +1,19 @@
 <script lang="ts">
 import { fly } from 'svelte/transition';
 import { Button } from "flowbite-svelte";
-import { userStore, type User } from "$lib/store";
-import { onMount } from 'svelte';
-import { fetchUserData } from '$lib/api';
+import { userStore, type User, type UserStats } from "$lib/store";
+
 
 let userData: User | null = null;
-userStore.subscribe((data) => userData = data);
+let stats: UserStats | null = null;
+
+userStore.subscribe((data) => {
+    userData = data;
+    stats = data?.stats || null;
+});
 
 let confusion_chess_btn = false
-let magic_chess_btn = false //<img src="/magic_chess.png" alt="" />
+let magic_chess_btn = false
 </script>
 
 
@@ -18,7 +22,7 @@ let magic_chess_btn = false //<img src="/magic_chess.png" alt="" />
         <div class="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
             <p class="text-center font-semibold text-xl mx-4 mb-0 dark:text-white">
                 {#if userData}
-                    Play Chess {userData.username}
+                    Wanna Play Chess? {userData.username}
                 {:else}
                     Loading...
                 {/if}
@@ -58,23 +62,27 @@ let magic_chess_btn = false //<img src="/magic_chess.png" alt="" />
             </p>
         </div>
 
+        {#if stats}
         <div class="flex justify-center text-left">
             <div class="w-[100%] m-3">
-                <p class="text-2xl font-bold">Really bad chess</p>
-                <p class="text-xl">Games Played: <span class="text-blue-500">10</span></p>
-                <p class="text-xl">Games Won: <span class="text-green-500">10</span> </p>
-                <p class="text-xl">Games Lost: <span class="text-red-500">10</span> </p>
-                <p class="text-xl">Games Drawn: <span class="text-yellow-500">10</span> </p>
+                <p class="text-2xl font-bold">Confusion chess</p>
+                <p class="text-xl">Games Played: <span class="text-blue-500">{stats.confusion_chess.wins + stats.confusion_chess.losses + stats.confusion_chess.draws}</span></p>
+                <p class="text-xl">Games Won: <span class="text-green-500">{stats.confusion_chess.wins}</span> </p>
+                <p class="text-xl">Games Lost: <span class="text-red-500">{stats.confusion_chess.losses}</span> </p>
+                <p class="text-xl">Games Drawn: <span class="text-yellow-500">{stats.confusion_chess.draws}</span> </p>
             </div>
 
             <div class="w-[100%] m-3">
                 <p class="text-2xl font-bold">Magic chess</p>
-                <p class="text-xl">Games Played: <span class="text-blue-500">10</span>  </p>
-                <p class="text-xl">Games Won: <span class="text-green-500">10</span>  </p>
-                <p class="text-xl">Games Lost: <span class="text-red-500">10</span>  </p>
-                <p class="text-xl">Games Drawn: <span class="text-yellow-500">10</span>  </p>
+                <p class="text-xl">Games Played: <span class="text-blue-500">{stats.magic_chess.wins + stats.magic_chess.losses + stats.magic_chess.draws}</span>  </p>
+                <p class="text-xl">Games Won: <span class="text-green-500">{stats.magic_chess.wins}</span>  </p>
+                <p class="text-xl">Games Lost: <span class="text-red-500">{stats.magic_chess.losses}</span>  </p>
+                <p class="text-xl">Games Drawn: <span class="text-yellow-500">{stats.magic_chess.draws}</span>  </p>
             </div>
         </div>
+        {:else}
+            <h1 class="text-3xl text-center">Loading stats...</h1>
+        {/if}
     </div>
 
 </div>
