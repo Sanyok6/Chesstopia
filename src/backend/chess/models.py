@@ -18,5 +18,5 @@ class ChessMatch(models.Model):
     black = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.SET_NULL,
                               related_name="chess_match_black")
     type = models.CharField(max_length=50, choices=CHESS_MATCH_TYPES)
-
+    created_at = models.DateTimeField(auto_now_add=True)
     result = models.IntegerField(choices=((0, "Draw"), (1, "White wins"), (-1, "Black wins")), null=True, blank=True)
