@@ -1,30 +1,12 @@
 from django.contrib.auth import get_user_model
+from django.db.models import Q
 from rest_framework import serializers
 
+from chess.models import ChessMatch
 from . import models
 
+
 User = get_user_model()
-
-
-class ConfusionChessStatsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.ConfusionChessStats
-        fields = ('wins', 'losses', 'draws')
-
-
-class MagicChessStatsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.MagicChessStats
-        fields = ('wins', 'losses', 'draws')
-
-
-class UserStatsSerializer(serializers.ModelSerializer):
-    confusion_chess = ConfusionChessStatsSerializer()
-    magic_chess = MagicChessStatsSerializer()
-
-    class Meta:
-        model = models.UserStats
-        fields = ('confusion_chess', 'magic_chess')
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
@@ -39,11 +21,26 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     password = None
-    userstats = UserStatsSerializer()
+    stats = serializers.SerializerMethodField()
+
+    def get_stats(self, user):
+        queryset = ChessMatch.objects.filter(Q(white=user) | Q(black=user))
+        return {
+            "confusion_chess": {
+                "wins": queryset.filter(type="confusion_chess", result=1).count(),
+                "losses": queryset.filter(type="confusion_chess", result=-1).count(),
+                "draws": queryset.filter(type="confusion_chess", result=0).count(),
+            },
+            "magic_chess": {
+                "wins": queryset.filter(type="magic_chess", result=1).count(),
+                "losses": queryset.filter(type="magic_chess", result=-1).count(),
+                "draws": queryset.filter(type="magic_chess", result=0).count(),
+            }
+        }
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'is_staff', 'is_playing', 'userstats')
+        fields = ('id', 'username', 'is_staff', 'is_playing', 'stats')
 
 
 class LoginSerializer(serializers.Serializer):
