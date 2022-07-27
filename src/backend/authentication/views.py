@@ -44,6 +44,8 @@ class SignupView(views.APIView):
 
 
 class LogoutView(views.APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
     def post(self, request):
         logout(request)
         response = Response(status=status.HTTP_204_NO_CONTENT)
