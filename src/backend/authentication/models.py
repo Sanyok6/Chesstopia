@@ -18,26 +18,3 @@ class CustomUser(AbstractUser):
     )
     email = models.EmailField(_("email address"), blank=True, null=True)
     is_playing = models.BooleanField(default=False)
-
-
-class VariantStats(models.Model):
-    wins = models.IntegerField(default=0)
-    losses = models.IntegerField(default=0)
-    draws = models.IntegerField(default=0)
-
-    class Meta:
-        abstract = True
-
-
-class ConfusionChessStats(VariantStats):
-    pass
-
-
-class MagicChessStats(VariantStats):
-    pass
-
-
-class UserStats(models.Model):
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    confusion_chess = models.ForeignKey(ConfusionChessStats, on_delete=models.SET_NULL, null=True)
-    magic_chess = models.ForeignKey(MagicChessStats, on_delete=models.SET_NULL, null=True)
