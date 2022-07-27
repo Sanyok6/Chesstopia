@@ -14,6 +14,8 @@ onMount(() => {
     fetchUserData(userData);
 })
 
+let btnClass: string = "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5"
+
 </script>
 
 
@@ -26,15 +28,16 @@ onMount(() => {
 		</span>
 	</NavBrand>
 	<div>
-		<DarkMode />
+		
 		<NavHamburger on:click={toggle} />
 	</div>
 
 	<NavUl {hidden}>
-		<NavLi href="/">Play</NavLi>
-		<NavLi href="/about">About</NavLi>
-		<NavLi href="#">Settings</NavLi>
-		<NavLi href="#">Logout</NavLi>
+		<DarkMode {btnClass} />
+		<NavLi class="mt-2" href="/">Play</NavLi>
+		<NavLi class="mt-2" href="/about">About</NavLi>
+		<NavLi class="mt-2" href="#">Settings</NavLi>
+		<NavLi class="mt-2" href="#">Logout</NavLi>
 	</NavUl>
 </Navbar>
 
