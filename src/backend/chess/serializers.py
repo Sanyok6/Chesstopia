@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from rest_framework.serializers import ValidationError
 
+from authentication.serializers import UserSerializer
 from . import models
 
 
@@ -17,6 +18,9 @@ class ChessMatchCreateSerializer(serializers.ModelSerializer):
 
 
 class ChessMatchSerializer(ChessMatchCreateSerializer):
+    white = UserSerializer()
+    black = UserSerializer()
+
     class Meta(ChessMatchCreateSerializer.Meta):
         fields = '__all__'
 
