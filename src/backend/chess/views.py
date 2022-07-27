@@ -1,12 +1,11 @@
-from rest_framework.viewsets import ModelViewSet
-from rest_framework.response import Response
+from django.db.models import Q
 from rest_framework import pagination, status
-from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
 
 from .models import ChessMatch
 from .serializers import (ChessMatchSerializer,
-                          ChessMatchCreateSerializer,
-                          ChessMatchResultSerializer)
+                          ChessMatchCreateSerializer)
 
 
 class ChessMatchesPaginator(pagination.PageNumberPagination):
@@ -14,8 +13,12 @@ class ChessMatchesPaginator(pagination.PageNumberPagination):
 
 
 class ChessMatchesViewSet(ModelViewSet):
-    queryset = ChessMatch.objects.all().order_by("-created_at")
     pagination_class = ChessMatchesPaginator
+
+    def get_queryset(self):
+        user = self.request.user
+        return (ChessMatch.objects.filter(Q(white=user) | Q(black=user))
+                .select_related('white', 'black').order_by("-created_at"))
 
     def get_serializer_class(self):
         if self.action.lower() in ("create", "update", "partial_update", "delete"):
