@@ -37,7 +37,7 @@ let btnClass: string = "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:
 		<NavLi class="mt-2" href="/">Play</NavLi>
 		<NavLi class="mt-2" href="/about">About</NavLi>
 		<NavLi class="mt-2" href="#">Settings</NavLi>
-		<NavLi class="mt-2" href="#">Logout</NavLi>
+		<NavLi class="mt-2" href="/logout">Logout</NavLi>
 	</NavUl>
 </Navbar>
 
