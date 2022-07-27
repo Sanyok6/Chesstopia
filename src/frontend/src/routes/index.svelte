@@ -22,7 +22,7 @@ let magic_chess_btn = false
         <div class="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
             <p class="text-center font-semibold text-xl mx-4 mb-0 dark:text-white">
                 {#if userData}
-                    Wanna Play Chess? {userData.username}
+                    Play Chess 
                 {:else}
                     Loading...
                 {/if}
