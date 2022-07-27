@@ -22,7 +22,7 @@ let btnClass: string = "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:
 <!-- <DarkMode /> -->
 
 <Navbar let:hidden let:toggle class="mb-5">
-	<NavBrand href="/welcome">
+	<NavBrand href="/">
 		<span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
 			Chesstopia
 		</span>
