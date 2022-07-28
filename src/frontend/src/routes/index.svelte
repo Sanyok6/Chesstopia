@@ -2,6 +2,8 @@
 import { fly } from 'svelte/transition';
 import { Button } from "flowbite-svelte";
 import { userStore, type User, type UserStats } from "$lib/store";
+import { fetchApi } from '$lib/api';
+import { goto } from '$app/navigation';
 
 
 let userData: User | null = null;
@@ -14,6 +16,22 @@ userStore.subscribe((data) => {
 
 let confusion_chess_btn = false
 let magic_chess_btn = false
+
+
+const startGame = (gameMode: string) => {
+    fetchApi('chess/matches/', {
+        method: 'POST',
+        body: JSON.stringify({
+            white: userData.id,
+            type: gameMode,
+        }),
+    }).then(async (response) => {
+        let data = await response.json()
+        console.log(data.id)
+       
+        goto("/play/"+data.type+"/"+data.id)
+    });
+}
 </script>
 
 
@@ -31,7 +49,7 @@ let magic_chess_btn = false
 
         <div class="flex justify-center">
             <div on:mouseenter={() => {confusion_chess_btn=true}} on:mouseleave={() => {confusion_chess_btn=false}} class="w-[100%] m-3">
-                <Button class="w-[100%] h-60 lg:text-[35px] sm:text-[25px] overflow-hidden">
+                <Button on:click={() => {startGame("confusion_chess")}} class="w-[100%] h-60 lg:text-[35px] sm:text-[25px] overflow-hidden">
                     {#if confusion_chess_btn}
                         <img src="/confusion_chess.png" alt="" class="h-52" transition:fly="{{ y: 150, duration: 300 }}" />
                     {:else}
@@ -41,7 +59,7 @@ let magic_chess_btn = false
             </div>
 
             <div on:mouseenter={() => {magic_chess_btn=true}} on:mouseleave={() => {magic_chess_btn=false}} class="w-[100%] m-3">
-                <Button class="w-[100%] h-60 lg:text-[35px] sm:text-[25px] overflow-hidden">
+                <Button on:click={() => {startGame("magic_chess")}}  class="w-[100%] h-60 lg:text-[35px] sm:text-[25px] overflow-hidden">
                     {#if magic_chess_btn}
                         <img src="/magic_chess.png" alt="" class="h-52" transition:fly="{{ y: 150, duration: 300 }}" />
                     {:else}
