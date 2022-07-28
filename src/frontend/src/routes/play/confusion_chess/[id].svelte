@@ -1,8 +1,10 @@
 <script lang="ts">
     import { page } from '$app/stores';
+    import { onMount } from 'svelte';
+
     const gameID = $page.params.id
 
-	import { Range, Dropdown, DropdownItem, Input, Label, Button, Spinner, Toast } from 'flowbite-svelte'
+	import { Range, Dropdown, DropdownItem, Input, Label, Button, Spinner, Toast, AccordionItem } from 'flowbite-svelte'
 
 	let board_size = 50
 	let board_style = "blue"
@@ -27,6 +29,9 @@
 
 	const whiteLineup = randomLayout().toLocaleLowerCase()
 	const blackLineup = randomLayout().toUpperCase()
+
+    let to_move = "white"
+    let result = 2 //who cares bro
 
 	let fen = whiteLineup+"/pppppppp/8/8/8/8/PPPPPPPP/"+blackLineup+" w KQkq - 0 1"
 	let move_color="white"
@@ -58,11 +63,12 @@
 	}
 
 	import { Chess } from 'chess.ts'
-import { onMount } from 'svelte';
+import { not_equal } from 'svelte/internal';
 	const chess = new Chess()
 
 	function play(from: string, to: string) {
 		chess.move({ from: from, to: to, promotion: "q" })
+        to_move = chess.turn() == "w" ? "white" : "black"
 		if (!chess.gameOver()) {
 			const moves = chess.moves()
 			const move = moves[Math.floor(Math.random() * moves.length)]
@@ -73,7 +79,7 @@ import { onMount } from 'svelte';
 			
 			updateConfig()
 			//setTimeout(play, 10)
-		}
+		} else {onGameOver()}
 	}
 
 	function generateLegalMoves() {
@@ -97,6 +103,18 @@ import { onMount } from 'svelte';
 		return legal
 	}
 
+    function onGameOver() {
+        if (chess.inCheckmate()) {
+            if (chess.turn() == "w") {
+                result = -1
+            } else {
+                result = 1
+            }
+        } else {
+            result = 0
+        }
+    }
+
 	generateLegalMoves()
 	updateConfig()
 
@@ -110,7 +128,7 @@ import { onMount } from 'svelte';
 </script>
 
   
-<div id="popup-modal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog">
+<div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog">
       <div class="relative p-4 w-full max-w-md h-full md:h-auto">
           <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
               <div class="p-6 text-center">
@@ -135,23 +153,49 @@ import { onMount } from 'svelte';
 	</div>	
 
 	<div class="">
-		<div class="m-3">
-			Adjust Board Size
-			<Range id="range1" min={25} max={95} bind:value={board_size}/>
-		</div>
-		<div class="m-3">
-			Board Theme
-			<Dropdown label="Board Theme" class="w-40">
-				<DropdownItem on:click={() => {board_style="blue"}}>Blue</DropdownItem>
-				<DropdownItem on:click={() => {board_style="green"}}>Green</DropdownItem>
-				<DropdownItem on:click={() => {board_style="brown"}}>Brown</DropdownItem>
-			</Dropdown>
-		</div>
-		<div class="m-3">
-			Piece Set
-			<Dropdown label="Piece Set" class="w-32">
-				<DropdownItem>Default</DropdownItem>
-			</Dropdown>
-		</div>
-	</div>
+        <AccordionItem id="1">
+            <h2 slot="header">Settings</h2>
+            <div slot="body">
+                <div class="m-3">
+                    Adjust Board Size
+                    <Range step={2} size="small" id="range1" min={25} max={95} bind:value={board_size}/>
+                </div>
+                <div class="m-3">
+                    Board Theme
+                    <Dropdown label="Board Theme" class="w-40">
+                        <DropdownItem on:click={() => {board_style="blue"}}>Blue</DropdownItem>
+                        <DropdownItem on:click={() => {board_style="green"}}>Green</DropdownItem>
+                        <DropdownItem on:click={() => {board_style="brown"}}>Brown</DropdownItem>
+                    </Dropdown>
+                </div>
+                <div class="m-3">
+                    Piece Set
+                    <Dropdown label="Piece Set" class="w-32">
+                        <DropdownItem>Default</DropdownItem>
+                    </Dropdown>
+                </div>
+            </div>
+        </AccordionItem>
+        <div class="text-center mt-5">
+            <p class="text-3xl">Confusion Chess</p>
+            <p class="text-lg">Opponent: Bob</p>
+
+            <div class="flex items-center justify-center mt-4">
+                {#if result == 2}
+                    <img src="/game/pieces/{to_move.charAt(0)}K.svg" alt="{to_move} to move" class="w-12 h-12" />
+                    <p class="text-lg">{to_move}'s move</p>   
+                {/if}
+
+                {#if result == 0}
+                    <p class="text-xl">Game is a drawn</p>
+                {/if}
+                {#if result == 1}
+                    <p class="text-xl">Game over, white won</p>
+                {/if}
+                {#if result == -1}
+                    <p class="text-xl">Game over, black won</p>
+                {/if}
+            </div>
+        </div>
+    </div>
 </div>
