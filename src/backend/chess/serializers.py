@@ -34,17 +34,6 @@ class ChessMatchResultSerializer(serializers.ModelSerializer):
 
         return result
 
-    def update(self, chess_match, data):
-        if self.context['request'].user not in (chess_match.white, chess_match.black):
-            raise ValidationError("You did not play this game")
-
-        if not chess_match.white or not chess_match.black:
-            raise ValidationError("This match hasn't been played yet")
-
-        chess_match.result = data['result']
-
-        return super().update(chess_match, data)
-
     class Meta:
         model = models.ChessMatch
         fields = ('result',)

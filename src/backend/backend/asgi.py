@@ -11,7 +11,6 @@ import os
 
 from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
-from channels.security.websocket import AllowedHostsOriginValidator
 from django.core.asgi import get_asgi_application
 
 import chess.urls
@@ -23,11 +22,10 @@ django_asgi_app = get_asgi_application()
 
 application = ProtocolTypeRouter({
     "http": django_asgi_app,
-    "websocket": AllowedHostsOriginValidator(
+    "websocket":
         AuthMiddlewareStack(
             URLRouter(
                 chess.urls.websocket_urlpatterns
             )
-        )
-    ),
+        ),
 })

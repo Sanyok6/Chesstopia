@@ -1,4 +1,4 @@
-from django.urls import re_path
+from django.urls import path
 from rest_framework.routers import DefaultRouter
 
 from . import views
@@ -11,5 +11,5 @@ router.register('matches', views.ChessMatchesViewSet, basename='chess_matches')
 urlpatterns = router.urls
 
 websocket_urlpatterns = [
-    re_path(r'ws/play/(?P<game_id>\w+)/$', consumers.ChessMatchConsumer.as_asgi()),
+    path(r'api/ws/play/<str:game_id>/', consumers.ChessMatchConsumer.as_asgi()),
 ]
