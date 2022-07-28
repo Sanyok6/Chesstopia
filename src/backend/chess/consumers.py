@@ -74,9 +74,9 @@ class ChessMatchConsumer(WebsocketConsumer):
         chess_match = self.chess_match
         if serializer.is_valid():
             validated_data = serializer.data
-            action = validated_data['action']
+            action = validated_data['action'].upper()
 
-            if action == 'CREATE_MOVE':
+            if action == 'MAKE_MOVE':
                 async_to_sync(self.channel_layer.group_send)(
                     self.game_group_name,
                     {
