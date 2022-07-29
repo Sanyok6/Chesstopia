@@ -3,7 +3,8 @@
 
 # Make sure to edit the `additional_dependencies` list if you want to add plugins
 
-exclude: ^.*[^.py]$
+exclude: ^(.*migrations/)
+# previously svg files somehow included in lint: ^.*[^.py]$
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
