@@ -9,10 +9,10 @@ def generate_id():
 
 def generate_fen():
     pieces = ["r", "n", "b", "q"]
+    layout = ["k"]
+    for p in range(7): 
+        layout.append(pieces[random.randint(0, len(pieces) - 1)])
     def get_random_layout():
-        layout = ["k"]
-        for p in range(7): 
-            layout.append(pieces[random.randint(0, len(pieces) - 1)])
         random.shuffle(layout)
         return str(layout).strip('[]').replace('\'', '').replace(', ', '')
 
