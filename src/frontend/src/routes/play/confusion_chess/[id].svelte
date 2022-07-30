@@ -60,7 +60,8 @@
 			enabled:false,
 		},
 		fen:fen,
-        lastMove: null
+        lastMove: null,
+        orientation: "white",
 	};
 
 	const updateConfig = () => {
@@ -195,9 +196,11 @@
                     game_started = true
                     if (message.payload.white.id == userData.id) {
                         playerColor = "w"
+                        config.orientation = "white"
                         generateLegalMoves()
                     } else if (message.payload.black.id == userData.id) {
                         playerColor = "b"
+                        config.orientation = "black"
                     } else {console.log("You are not a member of this game, please leave.")}
                     //alert("playing as "+playerColor)
                     console.log("playing as "+playerColor)
