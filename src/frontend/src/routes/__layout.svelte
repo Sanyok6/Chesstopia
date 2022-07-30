@@ -1,16 +1,18 @@
 <script lang="ts">
-import { DarkMode, Navbar, NavBrand, NavHamburger, NavLi, NavUl } from "flowbite-svelte";
+import { fetchUserData,getCookie } from "$lib/api";
+import { userStore,type User } from "$lib/store";
+import { DarkMode,Navbar,NavBrand,NavHamburger,NavLi,NavUl } from "flowbite-svelte";
 import { onMount } from "svelte";
-import { fetchUserData } from "$lib/api";
-import { userStore, type User } from "$lib/store";
 import '../app.css';
 
 
-let userData: User | null = null
+let userData: User | null = null;
+let isLoggedIn = false;  // Assume that the user is not logged in at first
 
 userStore.subscribe(d => userData = d)
 
 onMount(() => {
+	isLoggedIn = getCookie('isLoggedIn') === 'yes';
     fetchUserData(userData);
 })
 
@@ -22,7 +24,7 @@ let btnClass: string = "text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:
 <!-- <DarkMode /> -->
 
 <Navbar let:hidden let:toggle class="mb-5">
-	<NavBrand href="/">
+	<NavBrand href={isLoggedIn ? "/" : "/welcome"}>
 		<span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
 			Chesstopia
 		</span>
