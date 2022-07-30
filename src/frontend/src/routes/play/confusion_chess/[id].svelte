@@ -94,10 +94,6 @@
 		} else {onGameOver()}
 	}
 
-    function moveMade() {
-        generateLegalMoves()
-    }
-
 	function generateLegalMoves() {
 		const nowLegal = chess.moves({verbose:true})
 		let formated = []
@@ -131,11 +127,6 @@
         }
         console.log("game over, result: "+result)
     }
-
-	generateLegalMoves()
-	updateConfig()
-
-	//play()
 
     let game_started = false
 
@@ -204,6 +195,7 @@
                     game_started = true
                     if (message.payload.white.id == userData.id) {
                         playerColor = "w"
+                        generateLegalMoves()
                     } else if (message.payload.black.id == userData.id) {
                         playerColor = "b"
                     } else {console.log("You are not a member of this game, please leave.")}
@@ -211,6 +203,8 @@
                     console.log("playing as "+playerColor)
 
                     chess.load(message.payload.starting_pos)
+                    fen = message.payload.starting_pos
+                    updateConfig()
                 }, 1000)
 
             }
