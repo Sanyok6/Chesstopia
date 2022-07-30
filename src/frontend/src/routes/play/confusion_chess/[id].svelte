@@ -62,7 +62,7 @@
 			enabled:false,
 		},
 		fen:fen,
-        lastMove: null,
+        lastMove: [],
         orientation: "white",
 	};
 
@@ -154,12 +154,12 @@
     
                 chess.move({ from: message.payload.from, to: message.payload.to, promotion: message.payload.promotion })
                 fen = chess.fen()
-                last_move = [message.payload.from, message.payload.to]
 
                 to_move = chess.turn() == "w" ? "white" : "black"
 
                 if (chess.gameOver()) {
                     onGameOver()
+                    ws.send(JSON.stringify({action: "SET_RESULT", data: {result: result}}))
                 } else if (chess.turn() == playerColor) {
                     generateLegalMoves()
                 } else {
