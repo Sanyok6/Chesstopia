@@ -20,6 +20,8 @@
 
     let playerColor = ""
 
+    let opponentName = ""
+
 	import { Chessground, cgStylesHelper } from 'svelte-use-chessground';
 	import 'svelte-use-chessground/cgstyles/chessground.css';
 
@@ -197,10 +199,12 @@
                     if (message.payload.white.id == userData.id) {
                         playerColor = "w"
                         config.orientation = "white"
+                        opponentName = message.payload.black.username
                         generateLegalMoves()
                     } else if (message.payload.black.id == userData.id) {
                         playerColor = "b"
                         config.orientation = "black"
+                        opponentName = message.payload.white.username
                     } else {console.log("You are not a member of this game, please leave.")}
                     //alert("playing as "+playerColor)
                     console.log("playing as "+playerColor)
@@ -282,7 +286,7 @@
         </AccordionItem>
         <div class="text-center mt-5">
             <p class="text-3xl">Confusion Chess</p>
-            <p class="text-lg">Opponent: Bob</p>
+            <p class="text-lg">Opponent: {opponentName}</p>
 
             <div class="flex items-center justify-center mt-4">
                 {#if result == 2}
