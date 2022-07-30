@@ -60,16 +60,19 @@ class UserSerializer(serializers.ModelSerializer):
     def get_stats(self, user):
         """Return a dictionary of the user's Wins, Losses and Draws for Confusion Chess and Magic Chess."""
         queryset = ChessMatch.objects.filter(Q(white=user) | Q(black=user))
+        confusion_chs_qs = queryset.filter(type="confusion_chess")
+        magic_chs_qs = queryset.filter(type="magic_chess")
+
         return {
             "confusion_chess": {
-                "wins": queryset.filter(type="confusion_chess", result=1).count(),
-                "losses": queryset.filter(type="confusion_chess", result=-1).count(),
-                "draws": queryset.filter(type="confusion_chess", result=0).count(),
+                "wins": confusion_chs_qs.filter(white=user, result=1).count() + confusion_chs_qs.filter(black=user, result=-1).count(),
+                "losses": confusion_chs_qs.filter(white=user, result=-1).count() + confusion_chs_qs.filter(black=user, result=1).count(),
+                "draws": confusion_chs_qs.filter(result=0).count(),
             },
             "magic_chess": {
-                "wins": queryset.filter(type="magic_chess", result=1).count(),
-                "losses": queryset.filter(type="magic_chess", result=-1).count(),
-                "draws": queryset.filter(type="magic_chess", result=0).count(),
+                "wins": magic_chs_qs.filter(white=user, result=1).count() + magic_chs_qs.filter(black=user, result=-1).count(),
+                "losses": magic_chs_qs.filter(white=user, result=-1).count() + magic_chs_qs.filter(black=user, result=1).count(),
+                "draws": magic_chs_qs.filter(result=0).count(),
             }
         }
 
