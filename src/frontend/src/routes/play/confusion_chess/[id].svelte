@@ -4,10 +4,21 @@
 
     const gameID = $page.params.id
 
+    let userData: User | null = null;
+        
+    import { fetchApi } from '$lib/api';
+    import { userStore } from '$lib/store';
+    
+    userStore.subscribe((data) => {
+        userData = data;
+    });
+
 	import { Range, Dropdown, DropdownItem, Input, Label, Button, Spinner, Toast, AccordionItem } from 'flowbite-svelte'
 
 	let board_size = 50
 	let board_style = "blue"
+
+    let playerColor = ""
 
 	import { Chessground, cgStylesHelper } from 'svelte-use-chessground';
 	import 'svelte-use-chessground/cgstyles/chessground.css';
@@ -49,6 +60,7 @@
 			enabled:false,
 		},
 		fen:fen,
+        lastMove: null
 	};
 
 	const updateConfig = () => {
@@ -63,7 +75,7 @@
 	}
 
 	import { Chess } from 'chess.ts'
-import { not_equal } from 'svelte/internal';
+
 	const chess = new Chess()
 
 	function play(from: string, to: string) {
@@ -81,6 +93,10 @@ import { not_equal } from 'svelte/internal';
 			//setTimeout(play, 10)
 		} else {onGameOver()}
 	}
+
+    function moveMade() {
+        generateLegalMoves()
+    }
 
 	function generateLegalMoves() {
 		const nowLegal = chess.moves({verbose:true})
@@ -113,6 +129,7 @@ import { not_equal } from 'svelte/internal';
         } else {
             result = 0
         }
+        console.log("game over, result: "+result)
     }
 
 	generateLegalMoves()
@@ -120,15 +137,104 @@ import { not_equal } from 'svelte/internal';
 
 	//play()
 
-    let game_started = true
+    let game_started = false
 
     let game_url = ""
     onMount(() => game_url = window.location.href)
 
+    const connect = () => {
+        let ws = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/api/ws/play/'
+            + gameID
+            + '/'
+        );
+
+        ws.onopen = () => {
+            // ws.send(JSON.stringify({
+            //     "action": "MAKE_MOVE",
+            //     "data": {"from": "d2", "to": "d4", "promotion": "q"}
+            // }))
+            
+            console.log('connected')
+
+            // fetchApi("/chess/matches/"+gameID+"/").then(async (response) => {
+            //     let data = await response.json()
+            //     console.log(data)
+            //     console.log(data.white.id)
+            //     console.log(userData.id)
+            //     if (data.white.id == userData.id) {
+            //         playerColor = "w"
+            //     } else if (data.black.id == userData.id) {
+            //         playerColor = "b"
+            //     } else {alert("You are not a member of this game, please leave.")}
+            //     alert("playing as "+playerColor)
+            // })
+        };
+
+        ws.addEventListener ('message', (event) => {
+
+        });
+
+        ws.onmessage = (message) => {
+            message = JSON.parse(message.data)
+            console.log(message)
+            if (message.event == "CREATE_MOVE") {
+    
+                chess.move({ from: message.payload.from, to: message.payload.to, promotion: message.payload.promotion })
+                fen = chess.fen()
+
+                to_move = chess.turn() == "w" ? "white" : "black"
+
+                if (chess.gameOver()) {
+                    onGameOver()
+                } else if (chess.turn() == playerColor) {
+                    generateLegalMoves()
+                } else {
+                    legal = new Map([])
+                }
+                
+                updateConfig()
+
+            } else if (message.event == "GAME_START") {
+                console.log("starting game")
+
+                setTimeout(() => {
+                    game_started = true
+                    if (message.payload.white.id == userData.id) {
+                        playerColor = "w"
+                    } else if (message.payload.black.id == userData.id) {
+                        playerColor = "b"
+                    } else {console.log("You are not a member of this game, please leave.")}
+                    //alert("playing as "+playerColor)
+                    console.log("playing as "+playerColor)
+
+                    chess.load(message.payload.starting_pos)
+                }, 1000)
+
+            }
+        };
+
+        config.movable.events = {after: (from, to) => (
+            ws.send(JSON.stringify({
+                "action": "MAKE_MOVE",
+                "data": {"from": from, "to": to, "promotion": "q"}
+            }))
+        )}
+        
+    }
+
+    onMount(() => {
+        connect()
+    })
+
+    let open = true
+
 </script>
 
-  
-<div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog">
+{#if !game_started}
+<div id="popup-modal" tabindex="-1" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full justify-center items-center flex" aria-modal="true" role="dialog">
       <div class="relative p-4 w-full max-w-md h-full md:h-auto">
           <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
               <div class="p-6 text-center">
@@ -141,7 +247,8 @@ import { not_equal } from 'svelte/internal';
               </div>
           </div>
       </div>
-  </div>
+</div>
+{/if}
 
 <div class="xl:grid grid-cols-3">
 	<div class="col-span-2 flex justify-center items-center">
