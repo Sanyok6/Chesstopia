@@ -154,6 +154,7 @@
     
                 chess.move({ from: message.payload.from, to: message.payload.to, promotion: message.payload.promotion })
                 fen = chess.fen()
+                last_move = [message.payload.from, message.payload.to]
 
                 to_move = chess.turn() == "w" ? "white" : "black"
 
@@ -166,6 +167,8 @@
                 }
                 
                 updateConfig()
+                config.lastMove = [message.payload.from, message.payload.to]
+
 
             } else if (message.event == "GAME_START") {
                 console.log("starting game")
