@@ -1,5 +1,5 @@
 from django.db.models import Q
-from rest_framework import pagination, status
+from rest_framework import pagination, status, permissions
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
@@ -13,6 +13,7 @@ class ChessMatchesPaginator(pagination.PageNumberPagination):
 
 
 class ChessMatchesViewSet(ModelViewSet):
+    permission_classes = (permissions.IsAuthenticated,)
     pagination_class = ChessMatchesPaginator
 
     def get_queryset(self):
@@ -49,14 +50,3 @@ class ChessMatchesViewSet(ModelViewSet):
 
         return Response(ChessMatchSerializer(updated_instance,
                                              context=self.get_serializer_context()).data)
-
-    # @action(methods=('POST',), detail=True, url_path='set-result')
-    # def set_match_result(self, request, pk):
-    #     serializer = ChessMatchResultSerializer(self.get_object(), data=request.data,
-    #                                             partial=True, context=self.get_serializer_context())
-    #     serializer.is_valid(raise_exception=True)
-    #
-    #     chess_match = serializer.save()
-    #
-    #     return Response(ChessMatchSerializer(chess_match,
-    #                     context=self.get_serializer_context()).data)
