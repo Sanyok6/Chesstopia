@@ -34,6 +34,10 @@
       <div>
         <h1 class="text-6xl font-extralight text-center">Chesstopia</h1>
         <h2 class="mt-8 text-center text-3xl font-semibold text-gray-700 dark:text-gray-400">Create an account</h2>
+        <p class="mt-2 text-center text-sm text-gray-400">
+          Already have an account? 
+          <a href="/login" class="font-medium text-indigo-600 hover:text-indigo-500">Login</a>
+        </p>
       </div>
       <form class="mt-5 space-y-6" on:submit|preventDefault={handleLogin}>
         {#if messages.length}
