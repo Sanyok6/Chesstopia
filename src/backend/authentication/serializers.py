@@ -14,8 +14,8 @@ class UserCreateSerializer(serializers.ModelSerializer):
     class Meta:
         """Meta class for the :class:`UserCreateSerializer`.
 
-        From CustomUser, uses:
-        :param username: 50 characters or fewer. Letters, digits and @, ., +, -, or _
+        From :class:`authentication.models.CustomUser`(?), uses:
+        :param username: 50 characters or fewer. Letters, digits and /@, /., /+, /-, or /_
         only.
         :type username: CharField
         :param password: 128 characters or fewer.
@@ -32,7 +32,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    """Serializer for the stats of a user. Uses the User model that is active in the project."""
+    """Serializer for the stats and status of a user. Uses the User model that is active in the project."""
 
     password = None
     stats = serializers.SerializerMethodField()
@@ -40,17 +40,16 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         """Meta class for the :class:`UserSerializer`.
 
-        From CustomUser, uses:
-        :param id:
+        From :class:`authentication.models.CustomUser`(?), uses-
+        :param id: /# TODO
         :type id: IntegerField
-        :param username: 50 characters or fewer. Letters, digits and @, ., +, -, or _
-        only.
+        :param username: 50 characters or fewer. Letters, digits and /@, /., /+, /-, or /_ only.
         :type username: CharField
         :param is_staff: Designates whether the user can log into this admin site.
         :type is_staff: BooleanField, optional
-        :param is_playing:
-        :type is_playing: BooleanField, optional
-        :param stats:
+        :param is_playing: /# TODO
+        :type is_playing: BooleanField, optional, default=False
+        :param stats: /# TODO
         :type stats: SerializerMethodField
         """
 
@@ -65,13 +64,25 @@ class UserSerializer(serializers.ModelSerializer):
 
         return {
             "confusion_chess": {
-                "wins": confusion_chs_qs.filter(white=user, result=1).count() + confusion_chs_qs.filter(black=user, result=-1).count(),
-                "losses": confusion_chs_qs.filter(white=user, result=-1).count() + confusion_chs_qs.filter(black=user, result=1).count(),
+                "wins": (
+                    confusion_chs_qs.filter(white=user, result=1).count()
+                    + confusion_chs_qs.filter(black=user, result=-1).count()
+                ),
+                "losses": (
+                    confusion_chs_qs.filter(white=user, result=-1).count()
+                    + confusion_chs_qs.filter(black=user, result=1).count()
+                ),
                 "draws": confusion_chs_qs.filter(result=0).count(),
             },
             "magic_chess": {
-                "wins": magic_chs_qs.filter(white=user, result=1).count() + magic_chs_qs.filter(black=user, result=-1).count(),
-                "losses": magic_chs_qs.filter(white=user, result=-1).count() + magic_chs_qs.filter(black=user, result=1).count(),
+                "wins": (
+                    magic_chs_qs.filter(white=user, result=1).count()
+                    + magic_chs_qs.filter(black=user, result=-1).count()
+                ),
+                "losses": (
+                    magic_chs_qs.filter(white=user, result=-1).count()
+                    + magic_chs_qs.filter(black=user, result=1).count()
+                ),
                 "draws": magic_chs_qs.filter(result=0).count(),
             }
         }
