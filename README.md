@@ -63,3 +63,5 @@ pnpm dev
 ```
 
 ### Now visit the given url in the console
+
+### *If you encounter any errors during setup, please feel free to open an issue, or to contact us on discord!*
