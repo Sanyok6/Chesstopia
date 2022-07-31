@@ -44,10 +44,12 @@ python manage.py runserver
 > #### Note: Make sure the backend is running before the frontend
 
 #### Run the following commands
+
+> ### Make sure to install `pnpm` using `npm install -g pnpm`
 ```
 cd Chesstopia/src/frontend
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
 ### Now visit the given url in the console
