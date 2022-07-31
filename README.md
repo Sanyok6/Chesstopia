@@ -1,10 +1,17 @@
 # Chesstopia
 
 > ## Chesstopia is the submission of team spiffy-sphinxes for the python discord summer codejam 2022
+
+____
+
+# The goal
+
+### The goal of Chesstopia was to create a website that allows players to just enjoy chess. To fit the theme, we have created two game modes `Confusion Chess`, and `Magic Chess`. Both game modes slightly alter the rules of chess, to create a fun, and educational experience. Along the way, we have learned many new things, including Svelte, Typescript, and Django. Each game has a unique link, and the moves in the games are transmitted with the help of `Websockets` which allows users to play with thier friends online.
+
 ____
 # Chesstopia has two different game modes
 
-- ## Confusing Chess
+- ## Confusion Chess Chess
 
 - ### Confusion chess is a game mode which allows players piece layout to be different than the standard chess piece layout. This pushes the players skill because they won't know the piece layout and what pieces they'll get until the game starts. Hence standard openings won't work in this game mode
 
