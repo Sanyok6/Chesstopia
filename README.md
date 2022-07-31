@@ -13,7 +13,7 @@ ____
 
 - ### Magic chess is a game mode which allows players to by pass move validation sometimes. Players can take this to their advantage by making moves that are not valid in the standard chess
 
-> ### Note that these are all features of Chesstopia
+> ### These are the features of Chesstopia
 
 
 # Setup
@@ -24,6 +24,9 @@ ____
 
 ## Setting up the backend
 > ### Make sure to have `pipenv` installed using `pip install pipenv`
+> ### python 3.10 is required
+
+#### Run the following commands
 ```
 cd Chesstopia
 pipenv install
@@ -39,8 +42,12 @@ python manage.py runserver
 ## Setting up the frontend
 > ### Make sure to have node.js and npm installed
 > #### Note: Make sure the backend is running before the frontend
+
+#### Run the following commands
 ```
 cd Chesstopia/src/frontend
 npm install
 npm run dev
 ```
+
+### Now visit the given url in the console
