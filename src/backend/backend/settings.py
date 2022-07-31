@@ -57,11 +57,7 @@ MIDDLEWARE = [
 
 CHANNEL_LAYERS = {
     "default": {
-        # Set this to channels.layers.InMemoryChannelLayer if you don't want to use redis and remove the CONFIG key
         "BACKEND": "channels.layers.InMemoryChannelLayer",
-        # "CONFIG": {  # Remove this if you aren't using redis
-        #     "hosts": [("127.0.0.1", 6379)],
-        # },
     },
 }
 
