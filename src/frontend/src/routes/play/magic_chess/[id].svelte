@@ -201,13 +201,27 @@
     //     connect()
     // })
 
-    function validateMagicChessMoves(piece) {
 
-        function validate(pieceType, square) {
+    const get_piece_positions = (game, piece) => {
+        return [].concat(...game.board()).map((p, index) => {
+            if (p !== null && p.type === piece.type && p.color === piece.color) {
+            return index
+            }
+        }).filter(Number.isInteger).map((piece_index) => {
+            const row = 'abcdefgh'[piece_index % 8]
+            const column = Math.ceil((64 - piece_index) / 8)
+            return row + column
+        })
+    }
+
+    function validateMagicChessMoves(piece:{type:string;color:string;}) {
+
+        function validate(pieceType: {type:string;color:string;}, square:string) {
             // Creates a new instance of chess game to calculate moves
             const c = new Chess();
             c.clear()
-            c.put({ type: pieceType, color: "w" }, square); // to_move.charAt(0)
+            c.put({ type: pieceType.type, color: pieceType.color }, square); // to_move.charAt(0)
+
             
             const moves = c.moves({verbose: true});
             // by default first char is the piece type, last char is # if the move causes checkmate
@@ -217,9 +231,11 @@
         }
 
         const pieceType = piece
-        const square = 'h1';
+        const square = get_piece_positions(chess, piece)
 
-        const magicMoves = validate(pieceType, square);
+        if (square == []) {return}
+
+        const magicMoves = validate(pieceType, square[0]);
         console.log(magicMoves);
 
         generateLegalMoves(magicMoves)
@@ -228,7 +244,7 @@
 
 
     //generateLegalMoves([["h2", ["h8"]]])
-    validateMagicChessMoves("q")
+    validateMagicChessMoves({type: "q", color: to_move.charAt(0)})
     updateConfig()
 
 </script>
