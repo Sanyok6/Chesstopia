@@ -1,19 +1,22 @@
 # Chesstopia
 
 > ## Chesstopia is the submission of team spiffy-sphinxes for the python discord summer codejam 2022
-
-### Chesstopia has 2 game modes in which you can play
 ____
+# Chesstopia has two different game modes
 
 - ## Confusing Chess
-____
+
 - ### Confusion chess is a game mode which allows players piece layout to be different than the standard chess piece layout. This pushes the players skill because they won't know the piece layout and what pieces they'll get until the game starts. Hence standard openings won't work in this game mode
+
+- ### How does this apply to the theme? At first, this may seem like a bug, but it actaully allows players to focus on thier positonal thinking instead of memorising openings.
+
+____
 
 - ## Magic Chess
 
 - ### Magic chess is a game mode which allows players to by pass move validation sometimes. Players can take this to their advantage by making moves that are not valid in the standard chess
 
-> ### These are the features of Chesstopia
+- ### How does this apply to the theme? This may seem like a bug, but allowing illegal moves for some pieces leads to super fun, and crazy positions.
 
 
 # Setup
