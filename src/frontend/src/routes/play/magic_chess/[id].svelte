@@ -89,8 +89,10 @@
 			chess.move(move)
 			fen=chess.fen()
 
-			generateLegalMoves()
-			
+			//generateLegalMoves()
+            to_move = "white"
+			ability = getAbilityCard()
+
 			updateConfig()
 		} else {onGameOver()}
 	}
@@ -152,16 +154,37 @@
             console.log(message)
             if (message.event == "CREATE_MOVE") {
     
-                chess.move({ from: message.payload.from, to: message.payload.to, promotion: message.payload.promotion })
+                let backup_fen = chess.fen()
+        
+                chess.put(chess.remove(message.payload.from), message.payload.to)
+                
+                let f = chess.fen().split(" ")
+                if (f[1] == "w") {
+                    to_move = "black"
+                } else {
+                    to_move = "white"
+                }
+                console.log(chess.fen())
+                if (!chess.load(f[0]+" "+to_move.charAt(0)+" "+f[2]+" "+f[3]+" "+f[4]+" "+f[5])) {
+                    chess.load(f[0]+" "+to_move.charAt(0)+" "+f[2]+" - "+f[4]+" "+f[5])
+                }
+
                 fen = chess.fen()
 
-                to_move = chess.turn() == "w" ? "white" : "black"
+                // chess.move({ from: message.payload.from, to: message.payload.to, promotion: message.payload.promotion })
+                // fen = chess.fen()
+
+                // to_move = chess.turn() == "w" ? "white" : "black"
 
                 if (chess.gameOver()) {
                     onGameOver()
                     ws.send(JSON.stringify({action: "SET_RESULT", data: {result: result}}))
                 } else if (chess.turn() == playerColor) {
-                    generateLegalMoves()
+                    if (chess.inCheck()) {
+                        generateLegalMoves()
+                    } else {
+                        ability = getAbilityCard()
+                    }
                 } else {
                     legal = new Map([])
                 }
@@ -179,7 +202,7 @@
                         playerColor = "w"
                         config.orientation = "white"
                         opponentName = message.payload.black.username
-                        generateLegalMoves()
+                        ability = getAbilityCard()
                     } else if (message.payload.black.id == userData.id) {
                         playerColor = "b"
                         config.orientation = "black"
@@ -187,8 +210,8 @@
                     } else {console.log("You are not a member of this game, please leave.")}
                     console.log("playing as "+playerColor)
 
-                    chess.load(message.payload.starting_pos)
-                    fen = message.payload.starting_pos
+                    //chess.load(message.payload.starting_pos)
+                    //fen = message.payload.starting_pos
                     updateConfig()
                 }, 1000)
 
@@ -204,9 +227,9 @@
         
     }
 
-    // onMount(() => {
-    //     connect()
-    // })
+    onMount(() => {
+        connect()
+    })
 
 
     const get_piece_positions = (game, piece) => {
@@ -225,12 +248,12 @@
 
         function validate(pieceType: {type:string;color:string;}, square:string) {
             // Creates a new instance of chess game to calculate moves
-            const c = new Chess();
-            c.clear()
+            const c = new Chess("8/8/8/8/8/8/8/8 "+pieceType.color+" - - 0 1");
             c.put({ type: pieceType.type, color: pieceType.color }, square); // to_move.charAt(0)
 
-            
+            console.log("color "+piece.color+" to move "+c.turn()+ " given fen"+c.fen())
             const moves = c.moves({verbose: true});
+            console.log(moves)
             // by default first char is the piece type, last char is # if the move causes checkmate
             // stripping both for now.
             //return moves.map(move => (move.slice(1)).replace('#', ""));
@@ -249,8 +272,48 @@
     }
 
 
+    function getAbilityCard() {
+        const pieces = ["p", "b", "r", "q"]
+        const piece = pieces[Math.floor(Math.random() * pieces.length)]
 
-    let ability = []
+        console.log(to_move.charAt(0))
+
+        validateMagicChessMoves({type: piece, color: to_move.charAt(0)})
+
+        let title = ""
+        let description = ""
+        let image = ""
+
+        switch (piece) {
+            case "p":
+                title = "Super Pawn"                
+                description = "You can move your pawn one square forward, even if there is an enemy piece there."
+                image = "/game/pieces/wP.svg"
+                break;
+            case "b":
+                title = "Super Bishop"
+                description = "One of your bishops can move diagonally to any square, even if it takes or passes an enemy piece."
+                image = "/game/pieces/wB.svg"
+                break;
+            case "r":
+                title = "Magic Rook"
+                description = "One of your rooks can move horizontally or vertically to any square, even if it takes or passes an enemy piece."
+                image = "/game/pieces/wR.svg"
+                break;
+            case "q":
+                title = "Magic Queen"
+                description = "Your queen can move horizontally, vertically, or diagonally to any square, even if it takes or passes an enemy piece."
+                image = "/game/pieces/wQ.svg"
+                break;
+        
+            default:
+                break;
+        }
+
+        return {title: title, description: description, image: image}
+    }
+
+    let ability = getAbilityCard()
 
     //generateLegalMoves([["h2", ["h8"]]])
     //validateMagicChessMoves({type: "b", color: to_move.charAt(0)})
@@ -327,6 +390,14 @@
                 {#if result == -1}
                     <p class="text-xl">Game over, black won</p>
                 {/if}
+            </div>
+
+            <div class="flex items-center justify-center mt-4">
+                <div>
+                    <h1>{ability.title}</h1>
+                    {ability.description}
+                    <img src={ability.image} alt="" class="w-12 h-12" />
+                </div>
             </div>
         </div>
     </div>
