@@ -12,21 +12,21 @@
 		<div class="flex justify-center text-center mb-10">
 			<div class={game_mode_description_style}>
                 <h1 class="text-3xl">Confusion Chess</h1>
-                <p class="m-2">Confusion chess is a game mode which allows players piece layout to
-                    be different than the standard chess piece layout. This pushes the players skill
-                    because they won't know the piece layout and what pieces they'll get until the game starts.
-                    Hence standard openings won't work in this game mode</p>
+                <p class="m-2">Confusion chess is a game mode which allows a players piece layout to
+                    be different than the standard chess layout, with a different amount of pieces.
+					This may seem like a bug... But wait... This is actually a feature! Confusion Chess
+					allows players to focus on thier positional thinking since standard openings dont work here! </p>
 			</div>
 			<div class={game_mode_description_style}>
                 <h1 class="text-3xl">Magic Chess</h1>
-                <p class="m-2">Magic chess is a game mode which allows players to by pass move
-                   validation sometimes. Players can take this to their advantage by making moves that are
-                   not valid in the standard chess
+                <p class="m-2">Magic chess is a game mode which allows players to bypass move
+                   validation for some pieces. While this may seem like a bug, it allows for some 
+				   supper fun, and crazy chess games! 
                 </p>
 			</div>
 		</div>
-		<a href="/login">
-			<Button outline gradient color="purpleToBlue" shadow="blue">
+		<a href="/login" class="mt-20">
+			<Button outline gradient color="purpleToBlue" shadow="blue" size="lg">
 				Enter Chesstopia
 			</Button>
 		</a>
