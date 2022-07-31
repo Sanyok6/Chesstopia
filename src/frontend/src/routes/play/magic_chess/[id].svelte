@@ -201,7 +201,7 @@
     //     connect()
     // })
 
-    function validateMagicChessMoves() {
+    function validateMagicChessMoves(piece) {
 
         function validate(pieceType, square) {
             // Creates a new instance of chess game to calculate moves
@@ -216,7 +216,7 @@
             return moves
         }
 
-        const pieceType = 'q';
+        const pieceType = piece
         const square = 'h1';
 
         const magicMoves = validate(pieceType, square);
@@ -228,7 +228,7 @@
 
 
     //generateLegalMoves([["h2", ["h8"]]])
-    validateMagicChessMoves()
+    validateMagicChessMoves("q")
     updateConfig()
 
 </script>
