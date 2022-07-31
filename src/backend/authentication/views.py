@@ -8,9 +8,12 @@ from . import serializers
 
 
 class LoginView(views.APIView):
+    """View to authenticate user and log them in."""
+
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request):
+        """Handle the login request."""
         login_serializer = serializers.LoginSerializer(data=request.data)
         login_serializer.is_valid(raise_exception=True)
 
@@ -31,9 +34,12 @@ class LoginView(views.APIView):
 
 
 class SignupView(views.APIView):
+    """View to create a new user."""
+
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request):
+        """Handle the signup request."""
         serializer = serializers.UserCreateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
@@ -44,9 +50,12 @@ class SignupView(views.APIView):
 
 
 class LogoutView(views.APIView):
+    """View to log the user out."""
+
     permission_classes = (permissions.IsAuthenticated,)
 
     def post(self, request):
+        """Handle the logout."""
         logout(request)
         response = Response(status=status.HTTP_204_NO_CONTENT)
         response.delete_cookie('isLoggedIn')
@@ -54,10 +63,13 @@ class LogoutView(views.APIView):
 
 
 class UserViewSet(viewsets.ViewSet):
+    """ViewSet to create the action of getting the current (authenticate) user's stats and status."""
+
     permission_classes = (permissions.IsAuthenticated,)
 
     @action(methods=("GET",), detail=False, url_path="me")
     def get_current_user_data(self, request):
+        """Method to get the current user's stats and status. (?)."""
         data = {
             "user": serializers.UserSerializer(request.user, context=dict(request=request)).data,
         }
