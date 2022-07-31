@@ -47,7 +47,6 @@
     let result = 2 //who cares bro
 
 	let fen = whiteLineup+"/pppppppp/8/8/8/8/PPPPPPPP/"+blackLineup+" w KQkq - 0 1"
-	let move_color="white"
 	let legal= new Map([])
 
 	let cgApi;
