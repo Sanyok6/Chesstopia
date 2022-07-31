@@ -63,18 +63,25 @@
 
 	function play(from: string, to: string) {
 		// chess.move({ from: from, to: to, promotion: "q" })
+        let backup_fen = chess.fen()
+        
         chess.put(chess.remove(from), to)
+        
         let f = chess.fen().split(" ")
         if (f[1] == "w") {
             to_move = "black"
         } else {
             to_move = "white"
         }
+        console.log(chess.fen())
         if (!chess.load(f[0]+" "+to_move.charAt(0)+" "+f[2]+" "+f[3]+" "+f[4]+" "+f[5])) {
-            console.log("error loading fen")
+            chess.load(backup_fen)
+            fen=backup_fen
             updateConfig()
             generateLegalMoves()
-            return
+            if (!chess.load(f[0]+" "+to_move.charAt(0)+" "+f[2]+" - "+f[4]+" "+f[5])) {
+                return
+            }
         }
 		if (!chess.gameOver()) {
 			const moves = chess.moves()
@@ -243,8 +250,10 @@
 
 
 
+    let ability = []
+
     //generateLegalMoves([["h2", ["h8"]]])
-    validateMagicChessMoves({type: "q", color: to_move.charAt(0)})
+    //validateMagicChessMoves({type: "b", color: to_move.charAt(0)})
     updateConfig()
 
 </script>
