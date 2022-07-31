@@ -13,7 +13,7 @@ ____
 
 - ## Confusion Chess Chess
 
-- ### Confusion chess is a game mode which allows players piece layout to be different than the standard chess piece layout. This pushes the players skill because they won't know the piece layout and what pieces they'll get until the game starts. Hence standard openings won't work in this game mode
+- ### Confusion chess is a game mode which allows a players pieces, and starting position to be different than the standard chess piece layout. This pushes the players skill because they won't know the piece layout and what pieces they'll get until the game starts. Hence standard openings won't work in this game mode.
 
 - ### How does this apply to the theme? At first, this may seem like a bug, but it actaully allows players to focus on thier positonal thinking instead of memorising openings.
 
@@ -21,7 +21,7 @@ ____
 
 - ## Magic Chess
 
-- ### Magic chess is a game mode which allows players to by pass move validation sometimes. Players can take this to their advantage by making moves that are not valid in the standard chess
+- ### Magic chess is a game mode which allows players to by pass move validation for one piece every move. Players can take this to their advantage by making moves that are not valid in the standard chess
 
 - ### How does this apply to the theme? This may seem like a bug, but allowing illegal moves for some pieces leads to super fun, and crazy positions.
 
