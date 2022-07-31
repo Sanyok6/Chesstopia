@@ -131,7 +131,7 @@
         console.log("game over, result: "+result)
     }
 
-    let game_started = true
+    let game_started = false 
 
     let game_url = ""
     onMount(() => game_url = window.location.href)
@@ -392,12 +392,16 @@
                 {/if}
             </div>
 
-            <div class="flex items-center justify-center mt-4">
-                <div>
-                    <h1>{ability.title}</h1>
+            <div class="flex items-center justify-center mt-4 ">
+                {#if (to_move.charAt(0) == playerColor && !chess.inCheck())}
+                <div class="w-[50%] h-60 rounded-lg bg-[#ededed] dark:bg-black p-5">
+                    <h1 class="text-xl my-2">{ability.title}</h1>
                     {ability.description}
-                    <img src={ability.image} alt="" class="w-12 h-12" />
+                    <div class="flex items-center justify-center my-3">
+                        <img src={ability.image} alt="" class="w-12 h-12" />
+                    </div>
                 </div>
+                {/if}
             </div>
         </div>
     </div>
