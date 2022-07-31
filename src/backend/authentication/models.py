@@ -4,6 +4,8 @@ from django.utils.translation import gettext_lazy as _
 
 
 class CustomUser(AbstractUser):
+    """User class for the creation of a user. Validates unique usernames."""
+
     username = models.CharField(
         _("username"),
         max_length=50,
