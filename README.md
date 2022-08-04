@@ -62,6 +62,12 @@ pnpm install
 pnpm dev
 ```
 
-### Now visit the given url in the console.
+### Now visit the given url in the console
+____
+
+# Demo video
+https://www.youtube.com/watch?v=QCDiLgr0Quw
+
+[![Demo video](https://img.youtube.com/vi/QCDiLgr0Quw/0.jpg)](https://www.youtube.com/watch?v=QCDiLgr0Quw)
 
 ### *If you encounter any errors during setup, please feel free to open an issue, or to contact us on discord!*
